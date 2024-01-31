@@ -28,3 +28,59 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+library (tidyverse)
+library(readxl)
+library(here)
+
+```
+```{r}
+ca_np<-read.csv(here("data", "ca_np.csv"))
+```
+
+```{r}
+ci_np<- read_excel(here("data", "ci_np.xlsx"))
+```
+
+```{r}
+ggplot(data=ci_np,aes(x=year, y=visitors))+geom_line()
+```
+
+```{r}
+gg_base<-ggplot(data=ci_np, aes(x=year, y=visitors))
+```
+
+```{r}
+gg_base+geom_point()
+```
+
+```{r}
+gg_base+geom_col()
+gg_base+geom_area()
+```
+
+```{r}
+gg_base+
+  geom_line(
+    color = "coral4",
+    linetype = "dashed"
+  )
+```
+
+```{r}
+gg_base+
+  geom_point(color="coral3",
+             pch=16,
+             size=4,
+             alpha=0.5)
+```
+```{r}
+gg_base+
+  geom_point(
+    aes(size=visitors,
+        color=visitors),
+    alpha=0.5
+  )
+```
+
