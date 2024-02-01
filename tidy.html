@@ -431,6 +431,37 @@ names(inverts)</code></pre>
                            values_to=&quot;sp_count&quot;)</code></pre>
 <pre class="r"><code>inverts_long&lt;- inverts_long%&gt;%
   mutate(year=as.numeric(year))</code></pre>
+<pre class="r"><code>inverts_wide&lt;-inverts_long%&gt;%
+  pivot_wider(names_from=common_name,
+              values_from=sp_count)</code></pre>
+<pre class="r"><code>inverts_wide&lt;- inverts_wide%&gt;%
+  clean_names()
+names(inverts_wide)</code></pre>
+<pre><code>## [1] &quot;month&quot;                    &quot;site&quot;                    
+## [3] &quot;year&quot;                     &quot;california_cone_snail&quot;   
+## [5] &quot;california_spiny_lobster&quot; &quot;orange_cup_coral&quot;        
+## [7] &quot;purple_urchin&quot;            &quot;rock_scallop&quot;</code></pre>
+<pre class="r"><code>inverts_unite&lt;-inverts_long%&gt;%
+  unite(col=&quot;site_year&quot;,
+       c(site,year),
+       sep= &quot;_&quot;)</code></pre>
+<pre class="r"><code>inverts_moyr&lt;-inverts_long%&gt;%
+  unite(col=&quot;month_year&quot;,
+        c(month, year),
+        sep= &quot;_&quot;)</code></pre>
+<pre class="r"><code>inverts_triples_unit &lt;-inverts_long%&gt;%
+  unite(col=&quot;year_site_name&quot;,
+        c(year,site,common_name),
+        sep= &quot;-&quot;)</code></pre>
+<pre class="r"><code>inverts_sep&lt;- inverts_unite%&gt;%
+  tidyr:: separate(site_year, into=c(&quot;my_site&quot;, &quot;my_year&quot;))</code></pre>
+<pre class="r"><code>ca_abbr&lt;- inverts%&gt;%
+  mutate(
+    common_name=
+      str_replace(common_name,
+                  pattern=&quot;california&quot;,
+                  replacement = &quot;CA&quot;)
+  )</code></pre>
 </div>
 
 

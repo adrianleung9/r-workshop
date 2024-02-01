@@ -55,3 +55,51 @@ inverts_long<- inverts_long%>%
   mutate(year=as.numeric(year))
 ```
 
+```{r}
+inverts_wide<-inverts_long%>%
+  pivot_wider(names_from=common_name,
+              values_from=sp_count)
+```
+
+```{r}
+inverts_wide<- inverts_wide%>%
+  clean_names()
+names(inverts_wide)
+```
+
+```{r}
+inverts_unite<-inverts_long%>%
+  unite(col="site_year",
+       c(site,year),
+       sep= "_")
+```
+
+```{r}
+inverts_moyr<-inverts_long%>%
+  unite(col="month_year",
+        c(month, year),
+        sep= "_")
+```
+
+```{r}
+inverts_triples_unit <-inverts_long%>%
+  unite(col="year_site_name",
+        c(year,site,common_name),
+        sep= "-")
+```
+
+```{r}
+inverts_sep<- inverts_unite%>%
+  tidyr:: separate(site_year, into=c("my_site", "my_year"))
+```
+
+```{r}
+ca_abbr<- inverts%>%
+  mutate(
+    common_name=
+      str_replace(common_name,
+                  pattern="california",
+                  replacement = "CA")
+  )
+```
+
