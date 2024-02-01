@@ -102,3 +102,37 @@ fish_it<-fish %>%
 fish_it_false<-fish %>%
   filter(str_detect(common_name, pattern= "it", negate = TRUE))
 ```
+
+```{r}
+abut_kelp_fish<-kelp_abur%>%
+  full_join(fish, by =c ("year", "site"))
+```
+
+```{r}
+kelp_fish_left<- kelp_abur %>%
+  left_join(fish, by=c("year", "site"))
+```
+
+```{r}
+kelp_fish_injoin<- kelp_abur%>%
+  inner_join(fish, by = c("year","site"))
+```
+
+```{r}
+my_fish_join <- fish%>%
+  filter(year==2017& site=="abur") %>%
+  left_join(kelp_abur, by=c("year", "site")) %>%
+  mutate(fish_per_found = total_count / total_fronds)
+```
+
+```{r}
+kable(my_fish_join)
+```
+
+```{r}
+my_fish_join%>%
+  kable() %>%
+  kable_styling(bootstrap_options = "striped",
+                full_width = FALSE)
+```
+
